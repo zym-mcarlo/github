@@ -1,0 +1,7 @@
+@import './scheme/index.styl'
+
+for class in $schemeCalss
+  @import './scheme/' + class + '.styl'
+  for element in $schemeElement
+    .{class} .{element}
+      {element}()

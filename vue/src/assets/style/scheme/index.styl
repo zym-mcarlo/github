@@ -1,0 +1,26 @@
+/**
+  $schemeCalss 越靠前的样式会被后边的继承
+  如果不想继承样式，需要在样式文件写上不想继承的样式调用
+*/
+
+// root class
+$schemeCalss=mcarlo-scheme schemeA schemeB schemeC
+
+// 元素的class
+$schemeElement=__ mcarlo-button mcarlo-primay mcarlo-select mcarlo-table
+
+$scroll(width=14px, background=#767676, hoverBackground=#676767, trackBackground=#F1F2F8)
+  &::-webkit-scrollbar
+    width width
+  &::-webkit-scrollbar-thumb
+    background background
+    border-radius 5px
+    border-right 1px solid #fff
+    border-left 1px solid #fff
+  &::-webkit-scrollbar-thumb:hover,
+  &::-webkit-scrollbar-thumb:active
+    background hoverBackground
+    border-right 1px solid #f1f2f8
+    border-left 1px solid #f1f2f8
+  &::-webkit-scrollbar-track
+    background trackBackground

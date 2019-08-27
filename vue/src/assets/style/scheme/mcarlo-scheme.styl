@@ -1,0 +1,125 @@
+/**
+  基本样式
+*/
+@charset 'utf8'
+
+mcarlo-primay()
+  color #fff
+
+mcarlo-select()
+  min-width 60px
+  display inline-block
+  position relative
+  border 1px solid gray
+  .view-box
+    height 24px
+    cursor pointer
+    padding-right 20px
+    text-indent 10px
+    position relative
+    .filter-input
+      width calc(100% -20px)
+      height 100%
+      text-indent 10px
+      border 0
+      outline none
+      background none
+      position absolute
+      left 0
+      top 0
+    .iconfont
+      font-size 14px
+      transform translateY(-50%)
+      position absolute
+      right 3px
+      top  50%
+  .option-box
+    width 100%
+    position absolute
+    top 100%
+    left 0
+    padding 10px 0
+
+
+mcarlo-table()
+  // 表格头部
+  .table-title
+    display flex
+    align-items center
+    .table-title-item
+      flex 1
+      display flex
+      align-items center
+      .triangle
+        font-size 8px
+        color #777
+        margin-left 2px
+        transition transform 0.3s linear
+        &.sortS
+          transform rotateZ(90deg)
+        &.sortI
+          transform rotateZ(-90deg)
+    .operate
+      flex 0 0 80px
+      height 100%
+      text-align center
+      border-left 1px solid #dcdcdc
+
+  // 表格内容
+  .table-body
+    position relative
+    li
+      display flex
+      align-items center
+      .table-body-item
+        flex 1
+        width 0
+        display flex
+        align-items center
+        &>*
+          max-width 100%
+          overflow hidden
+          white-space nowrap
+          text-overflow ellipsis
+
+  // 操作菜单
+  .operation-menu
+    padding 0
+    margin 0
+    list-style none
+    background #fff
+    border-radius 4px
+    overflow hidden
+    box-shadow 0 6px 20px 0 rgba(59,46,47,.4)
+    position fixed
+    z-index 1
+    transition left 0.3s ease, top 0.3s ease
+    li
+      display flex
+      align-items center
+      font-size 12px
+      cursor pointer
+      user-select none
+      padding 10px 20px
+      &:hover
+        background #ff5f3d
+        color #fff
+      &:active
+        background #FF5531
+        color #fff
+
+  // 表格遮罩
+  .shadow
+    position fixed
+    left 0
+    right 0
+    top 0
+    bottom 0
+    background transparent
+
+  // 提示框
+  .tip-box
+    position fixed
+    background rgba(0, 0, 0, 0.7)
+    color #fff
+    transition left 0.3s ease, top 0.3s ease
