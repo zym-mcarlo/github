@@ -16,7 +16,7 @@ export default {
   methods: {
     updateOption(filterVal) {
       this.filterOptions = this.options.filter(item => {
-        let regx = new RegExp(filterVal, 'ig')
+        const regx = new RegExp(filterVal, 'ig')
         return item.child.label.match(regx)
       })
     }

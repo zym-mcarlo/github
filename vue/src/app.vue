@@ -17,20 +17,12 @@
     </div>
 
     <div style="margin: 20px;">
-      <mcarlo-table :tableTitle="tableTitle" :tableBody="tableBody" judgeSelectedKey="id" operationable :selectedList="selectedList" loading>
+      <mcarlo-table :tableTitle="tableTitle" :tableBody="tableBody" :rowClickCallback="onRowClick">
         <template #custom="asdf">
           <div @click="show(asdf.customs)">{{asdf.customs.id}}</div>
           <div>
             <span>123</span>
           </div>
-        </template>
-        <template #operate>
-          <div>1</div>
-          <div>2</div>
-        </template>
-        <template #operate>
-          <div>1</div>
-          <div>2</div>
         </template>
       </mcarlo-table>
     </div>
@@ -51,8 +43,8 @@ export default {
       ],
       slct: '',
       tableTitle: [
-        { name: '名称', key: 'name', sortable: true },
-        { name: '年龄', key: 'age', sortable: true },
+        { name: '名称', key: 'name', sortable: true, useSortFunction: 'asc' },
+        { name: '年龄', key: 'age', sortable: true, useSortFunction: 'uu' },
         { name: '性别', key: 'sex', sortable: true, sortFunction () { return -1 } },
         { name: '体重', key: 'weight', justify: 'center' },
         { name: '朋友', key: 'friend', justify: 'flex-end' },
@@ -79,7 +71,11 @@ export default {
             { data: '打豆豆' },
           ]
         },
-        { id: '2', name: 'zhangpengtao', age: 27, sex: 'girl', weight: '60kg' },
+        { id: '2', name: 'zhangpengtao', age: 27, sex: 'girl', weight: '60kg',
+          click: () => {
+            console.log('row')
+          }
+        },
         { id: '3', name: 'chenzhiji', age: 25, sex: 'man', weight: '55kg' },
         { id: '3', name: 'chenzhiji', age: 25, sex: 'man', weight: '55kg' },
         { id: '3', name: 'chenzhiji', age: 25, sex: 'man', weight: '55kg' },
@@ -95,6 +91,9 @@ export default {
     show (item) {
       console.log('****************')
       console.log(item)
+    },
+    onRowClick(arg) {
+      console.log(arg)
     }
   }
 }

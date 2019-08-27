@@ -2,7 +2,7 @@
   <section class="mcarlo-table">
 
     <!-- 表格头部 -->
-    <ul class="table-title">
+    <ul class="table-title" v-if="!hiddenTitle">
       <li class="table-title-item"
         v-for="(item, index) in tableTitle" :key="index"
         @click="item.sortable && sort(item)"
@@ -18,9 +18,6 @@
               ? 'sortS' : 'sortI'
             : ''"></i>
       </li>
-      <li class="operate" v-if="operationable">
-        <span>操作</span>
-      </li>
     </ul>
 
     <!-- 表格内容 -->
@@ -32,7 +29,8 @@
         <div class="loading" v-if="loading" style="position: absolute; left: 50%; top: 50%; transform: translate3d(-50%, -50%, 0);color: #fff;background: rgba(0,0,0,0.7);">正在加载...</div>
       </slot>
 
-      <li v-for="(info, index) in tableContent" :key="index">
+      <li v-for="(info, index) in tableContent" :key="index"
+        @click="rowClickCallback ? rowClickCallback(info) : (info.click && info.click())">
         <div class="table-body-item"
           v-for="({key}, i) in tableTitle" :key="i"
           :style="{
@@ -62,30 +60,12 @@
           <span class="item-content"
             v-else>{{ info[key] }}</span>
         </div>
-
-        <div class="operate" v-if="operationable">
-          <slot name="operate"></slot>
-        </div>
-      </li>
-    </ul>
-
-    <!-- 操作菜单 -->
-    <ul
-      ref="operationMenu"
-      class="operation-menu"
-      v-if="showOperationMenu"
-      :style="operationMenuSite"
-      @mouseleave="showOperationMenu = false">
-      <li v-for="(item, index) in operationMenu" :key="index" @click="item.clickFun(operationItem)">
-        <span>{{item.name}}</span>
       </li>
     </ul>
 
     <!-- tooltip -->
     <div class="tip-box" ref="tipBox" :style="tipSide" v-if="showTipFlag">{{tipInfo.value || tipInfo}}</div>
 
-    <!-- 遮罩 -->
-    <div class="shadow" v-if="showOperationMenu" @click="showOperationMenu = false"></div>
   </section>
 </template>
 
@@ -109,17 +89,9 @@ export default {
       type: Array,
       default: () => []
     },
-    operationMenu: { // 操作列表
-      type: Array,
-      default: () => []
-    },
-    judgeSelectedKey: String,
-    operationable: Boolean,
     loading: Boolean,
-    selectedList: {
-      type: Array,
-      default: () => []
-    }
+    hiddenTitle: Boolean,
+    rowClickCallback: Function
   },
   data () {
     return {
@@ -127,13 +99,8 @@ export default {
       sortBy: '',
       sortOrder: true, // true 正序
       operationItem: {},
-      showOperationMenu: false,
       showTipFlag: false,
       tipInfo: {},
-      operationMenuSite: {
-        top: 0,
-        left: 0
-      },
       tipSide: {
         top: 0,
         left: 0
@@ -158,42 +125,25 @@ export default {
       this.tableContent.sort((pre, next) => {
         let optionP = pre[this.sortBy] || ''
         let optionN = next[this.sortBy] || ''
+        optionP = optionP.data || optionP
+        optionN = optionN.data || optionN
+        let orderNum = 0
         if (item.sortFunction) {
-          return item.sortFunction(optionP, optionN)
+          orderNum = item.sortFunction(optionP, optionN)
         } else {
-          return this.sortByAsc(optionP, optionN)
-        }
-      })
-    },
-    sortByAsc (optionP, optionN) {
-      let intOrString = (s) => {
-        var n = parseInt(s)
-        return isNaN(n) ? s : n
-      }
-      let lhsArr = optionP.toString().split(/(\d+)/).map(intOrString)
-      let rhsArr = optionN.toString().split(/(\d+)/).map(intOrString)
-      let orderNum = 0
-      let arr = lhsArr.length > rhsArr.length ? lhsArr : rhsArr
-      for (let i = 0; i < arr.length; i++) {
-        if (lhsArr[i] !== rhsArr[i]) {
-          let lhsIsUndefined = typeof lhsArr[i] === 'undefined'
-          let rhsIsUndefined = typeof rhsArr[i] === 'undefined'
-          if (lhsIsUndefined) {
-            orderNum = -1
-          } else if (rhsIsUndefined) {
-            orderNum = 1
+          if (item.useSortFunction) {
+            orderNum = this.$options[item.useSortFunction] && this.$options[item.useSortFunction](optionP, optionN)
           } else {
-            orderNum = lhsArr[i] < rhsArr[i] ? -1 : 1
+            orderNum = this.$options.asc(optionP, optionN)
           }
-          break
         }
-      }
-      if (orderNum !== 0) {
-        orderNum = this.sortOrder
-          ? orderNum === 1 ? 1 : -1
-          : orderNum === 1 ? -1 : 1
-      }
-      return orderNum
+        if (orderNum !== 0) {
+          if (!this.sortOrder) {
+            orderNum = orderNum === 1 ? -1 : 1
+          }
+        }
+        return orderNum
+      })
     },
     showTip (e, tip) {
       this.showTipFlag = true

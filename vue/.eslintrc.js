@@ -33,6 +33,7 @@ module.exports = {
     'no-console': ['warn', { 'allow': ['log', 'warn', 'error'] }],
     'linebreak-style': 'off',
     'no-unused-vars': 'warn',
-    'prefer-const': 'off'
+    'func-names': 'off',
+    'no-plusplus': ['warn', { "allowForLoopAfterthoughts": true }]
   },
 };
