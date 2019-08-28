@@ -34,6 +34,7 @@ module.exports = {
     'linebreak-style': 'off',
     'no-unused-vars': 'warn',
     'func-names': 'off',
-    'no-plusplus': ['warn', { "allowForLoopAfterthoughts": true }]
+    'no-plusplus': ['warn', { "allowForLoopAfterthoughts": true }],
+    'object-curly-newline': ['warn', { "ObjectPattern": { "multiline": true } }]
   },
 };

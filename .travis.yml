@@ -40,3 +40,4 @@ install:
 script:
     # - ember test --server
     - yarn test
+    - yarn lint

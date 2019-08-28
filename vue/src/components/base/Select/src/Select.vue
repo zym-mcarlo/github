@@ -5,7 +5,7 @@
         opacity: focus
           ? filterOptionInput
             ? 0
-            : 0.3
+            : (whenFocusOpacity || 0.3)
           : 1
       }">{{label}}</span>
       <input type="text"
@@ -13,7 +13,7 @@
         class="filter-input"
         v-model="filterOptionInput"
         v-if="filterable"
-        :placeholder="label ? '' : '。。。'"
+        :placeholder="label ? '' : placeholder"
         @focus="focus = true"
         @blur="focus = false">
       <i class="iconfont icontriangle-down"></i>
@@ -36,6 +36,11 @@ export default {
     filterable: Boolean,
     value: {
       required: true
+    },
+    whenFocusOpacity: Number,
+    placeholder: {
+      type: String,
+      default: '请输入信息'
     }
   },
   data() {

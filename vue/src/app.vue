@@ -8,12 +8,14 @@
     <button class="pp oo" @click="scheme = 'schemeC'">切换主题C</button>
 
     <div style="margin: 20px;">
-      <label for="">
-        <span style="vertical-align: top;">Group</span>
-        <mcarlo-select :filterable="true" v-model="slct">
-          <mcarlo-option v-for="(item, index) in options" :key="index" :value="item.value" :label="item.label"></mcarlo-option>
-        </mcarlo-select>
-      </label>
+      <span style="vertical-align: top;">Group</span>
+      <mcarlo-select :filterable="true" v-model="slct" style="width: 200px;">
+        <mcarlo-option
+          v-for="(item, index) in options" :key="index"
+          :value="item.value"
+          :label="item.label">
+        </mcarlo-option>
+      </mcarlo-select>
     </div>
 
     <div style="margin: 20px;">
@@ -32,7 +34,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       selectedList: [],
       scheme: 'schemeC',
@@ -45,7 +47,7 @@ export default {
       tableTitle: [
         { name: '名称', key: 'name', sortable: true, useSortFunction: 'asc' },
         { name: '年龄', key: 'age', sortable: true, useSortFunction: 'uu' },
-        { name: '性别', key: 'sex', sortable: true, sortFunction () { return -1 } },
+        { name: '性别', key: 'sex', sortable: true, sortFunction() { return -1 } },
         { name: '体重', key: 'weight', justify: 'center' },
         { name: '朋友', key: 'friend', justify: 'flex-end' },
         { name: '自定义列', key: 'customs', slot: 'custom' },
@@ -68,10 +70,15 @@ export default {
           hobby: [
             { data: '吃饭', tip: '我爱吃饭' },
             { data: '睡觉' },
-            { data: '打豆豆' },
+            { data: '打豆豆' }
           ]
         },
-        { id: '2', name: 'zhangpengtao', age: 27, sex: 'girl', weight: '60kg',
+        {
+          id: '2',
+          name: 'zhangpengtao',
+          age: 27,
+          sex: 'girl',
+          weight: '60kg',
           click: () => {
             console.log('row')
           }
@@ -85,10 +92,10 @@ export default {
     }
   },
   methods: {
-    swichScheme () {
+    swichScheme() {
       this.scheme = this.scheme === 'schemeA' ? 'schemeB' : 'schemeA'
     },
-    show (item) {
+    show(item) {
       console.log('****************')
       console.log(item)
     },

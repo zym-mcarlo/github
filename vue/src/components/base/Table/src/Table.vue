@@ -91,7 +91,11 @@ export default {
     },
     loading: Boolean,
     hiddenTitle: Boolean,
-    rowClickCallback: Function
+    rowClickCallback: Function,
+    mouseDistance: {
+      type: Number,
+      default: 0
+    }
   },
   data () {
     return {
@@ -152,7 +156,7 @@ export default {
         let tipW = this.$refs.tipBox.offsetWidth / 2
         let tipH = this.$refs.tipBox.offsetHeight
         let btnH = e.currentTarget.offsetHeight
-        this.tipSide.top = `${e.clientY - tipH - btnH}px`
+        this.tipSide.top = `${e.clientY - tipH - btnH - this.mouseDistance}px`
         this.tipSide.left = `${e.clientX - tipW}px`
       })
     }

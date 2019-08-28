@@ -7,7 +7,8 @@
     "start": "yarn dev",
     "dev": "webpack-dev-server --config ./build/webpack.config.js",
     "build": "webpack --config ./build/webpack.config.js",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ./src/*.vue"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.29",

@@ -1,3 +1,9 @@
 language: node_js
 node_js:
   - 10
+install:
+  - cd vue
+  - yarn install
+script:
+  - yarn test
+  - yarn lint
